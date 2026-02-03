@@ -14,7 +14,7 @@ All infrastructure is created using Terraform, and all configuration, patching, 
 Project Goals:
 
 ⦁	Deploy multi‑OS infrastructure automatically
-⦁	Configure passwordless automation using a dedicated ansible user
+⦁	Configure passwordless automation using a dedicated Ansible user
 ⦁	Provide a unified Ansible playbook for:
 ⦁	Patching RHEL & Ubuntu
 ⦁	Rolling back patches (OS‑specific logic)
