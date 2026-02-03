@@ -11,13 +11,13 @@ All infrastructure is created using Terraform, and all configuration, patching, 
 
 Project Goals:
 
-⦁	Deploy multi‑OS infrastructure automatically
-⦁	Configure passwordless automation using a dedicated Ansible user
-⦁	Provide a unified Ansible playbook for Patching RHEL & Ubuntu
-⦁	Rolling back patches (OS‑specific logic)
-⦁	Maintain a clean, modular, production‑ready repo structure
-⦁	Support GitLab CI/CD for validation and deployment
+*	Deploy multi‑OS infrastructure automatically
+*	Configure passwordless automation using a dedicated Ansible user
+*	Provide a unified Ansible playbook for Patching RHEL & Ubuntu
+*	Rolling back patches (OS‑specific logic)
+*	Maintain a clean, modular, production‑ready repo structure
+*	Support GitLab CI/CD for validation and deployment
 
-Published by: Luis Francisco
-Contact: lrfrancisco17@gmail.com
-Social:https://www.linkedin.com/in/luisfrancisco
+- Published by: Luis Francisco
+- Contact: lrfrancisco17@gmail.com
+- Social:https://www.linkedin.com/in/luisfrancisco
