@@ -17,7 +17,5 @@ Project Goals:
 ⦁	Support GitLab CI/CD for validation and deployment
 
 Published by: Luis Francisco
-
 Contact: lrfrancisco17@gmail.com
-
 Social:https://www.linkedin.com/in/luisfrancisco
