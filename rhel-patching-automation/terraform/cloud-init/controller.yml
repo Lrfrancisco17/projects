@@ -1,14 +1,19 @@
 #cloud-config
 packages:
-  - ansible-core
-  - git
   - python3
+  - git
+  - ansible-core
 
 users:
   - name: ansible
-    groups: sudo
+    groups: [wheel, adm]
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh-authorized-keys:
-      - ${file("~/.ssh/id_rsa.pub")}
+      - ${ssh_pubkey}
+
+ssh_pwauth: false
+
+runcmd:
+  - hostnamectl set-hostname controller
 

@@ -1,0 +1,10 @@
+---
+- name: Dummy rollback playbook
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Show message
+      ansible.builtin.debug:
+        msg: "Rollback logic would go here (snapshots, package versions, etc.)"
+
