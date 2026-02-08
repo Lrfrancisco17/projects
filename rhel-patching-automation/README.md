@@ -86,7 +86,7 @@ Ping all hosts: (You should see successful responses from all three nodes)
 
 ---- Run Patch Playbook ----
 
-Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)
+Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)  
   #ansible-playbook playbooks/patch.yml
 
 Run Rollback Playbook:  
