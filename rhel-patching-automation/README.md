@@ -40,8 +40,23 @@ Navigate into the Terraform directory:
 #cd terraform-ansible-lab/terraform
 
 1. Initialize Terraform  
-   - terraform init
 
+#terraform init
+
+2. Review the plan
+
+terraform plan
+
+3. Deploy the environment
+
+terraform apply -auto-approve
+
+Terraform will create:
+*VPC, subnet, route table, IGW
+*Security group for SSH
+*Controller EC2 instance
+*RHEL 10 EC2 instance
+*Ubuntu EC2 instance
 
 command
 terraform init
