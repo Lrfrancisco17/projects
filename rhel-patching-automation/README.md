@@ -35,11 +35,10 @@ If you need to generate a key:
 
 ---- Deploying the Infrastructure via Terraform ----
 
-Navigate into the Terraform directory:  
+1. Navigate into the Terraform directory:  
+   #cd terraform-ansible-lab/terraform
 
-#cd terraform-ansible-lab/terraform
-
-1. Initialize Terraform  
+2. Initialize Terraform  
 
    #terraform init
 
@@ -47,7 +46,7 @@ Navigate into the Terraform directory:
 
     #terraform plan
 
-5. Deploy the environment
+4. Deploy the environment
 
     #terraform apply -auto-approve
 
