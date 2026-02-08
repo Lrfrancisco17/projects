@@ -81,7 +81,7 @@ ansible_user=ansible
 Move into the Ansible directory:  
    #cd ansible
 
-Ping all hosts: (You should see successful responses from all three nodes)
+Ping all hosts: (You should see successful responses from all three nodes)  
   #ansible-playbook playbooks/ping.yml
 
 ---- Run Patch Playbook ----
