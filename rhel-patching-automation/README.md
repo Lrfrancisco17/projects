@@ -33,7 +33,7 @@ If you need to generate a key:
 #ssh-keygen -t rsa -b 4096
 
 
----- Deploying the Infrastructure ----
+---- Deploying the Infrastructure via Terraform ----
 
 Navigate into the Terraform directory:  
 
@@ -41,15 +41,16 @@ Navigate into the Terraform directory:
 
 1. Initialize Terraform  
 
-#terraform init
+   #terraform init
 
-2. Review the plan
+3. Review the plan
 
-terraform plan
+    #terraform plan
 
-3. Deploy the environment
+5. Deploy the environment
 
-terraform apply -auto-approve
+    #terraform apply -auto-approve
+
 
 Terraform will create:  
 
@@ -59,15 +60,8 @@ Terraform will create:
 * RHEL 10 EC2 instance
 * Ubuntu EC2 instance
 
-command
-terraform init
-terraform apply -auto-approve
-terraform output inventory > ../ansible/inventory.ini
 
 
   
-Published by: Luis Francisco  
-Contact: lrfrancisco17@gmail.com  
-Social: https://www.linkedin.com/in/luisfrancisco  
-Certifications: https://www.credly.com/users/luisfrancisco  
-Youtube: https://www.youtube.com/@Innovationlu  
+Published by: Luis Francisco   
+Social: https://www.linkedin.com/in/luisfrancisco   
