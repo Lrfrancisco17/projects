@@ -59,7 +59,7 @@ Terraform will create:
 * RHEL 10 EC2 instance
 * Ubuntu EC2 instance
 
-After Terraform completes, export the generated inventory: Do not skip this step!!
+After Terraform completes, export the generated inventory: Do not skip this step!!  
 terraform output inventory > ../ansible/inventory.ini
 
 This file will look like:
