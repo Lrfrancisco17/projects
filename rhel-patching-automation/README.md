@@ -28,8 +28,8 @@ Ansible ≥ 2.15
 AWS CLI configured with a profile (default: lab)
 SSH key pair at ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
 
-If you need to generate a key:
-   #ssh-keygen -t rsa -b 4096
+If you need to generate a key:  
+   #ssh-keygen -t rsa -b 4096  
 
   
 
