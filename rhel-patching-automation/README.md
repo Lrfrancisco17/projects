@@ -49,7 +49,7 @@ If you need to generate a key:
 4. Deploy the environment
 
     #terraform apply -auto-approve
-
+ 
 
 Terraform will create:  
 
@@ -59,7 +59,44 @@ Terraform will create:
 * RHEL 10 EC2 instance
 * Ubuntu EC2 instance
 
+After Terraform completes, export the generated inventory:
+terraform output inventory > ../ansible/inventory.ini
 
+This file will look like:
+
+[controller]
+10.0.1.x
+
+[rhel]
+10.0.1.x
+
+[ubuntu]
+10.0.1.x
+
+[all:vars]
+ansible_user=ansible
+
+
+---- Test Connectivity with Ansible ----  
+Move into the Ansible directory:  
+   #cd ansible
+
+Ping all hosts: (You should see successful responses from all three nodes)
+  #ansible-playbook playbooks/ping.yml
+
+---- Run Patch Playbook ----
+
+Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)
+  #ansible-playbook playbooks/patch.yml
+
+Run Rollback Playbook:  
+  #ansible-playbook playbooks/rollback.yml
+
+--- Destroy the Environment ---
+
+When you're done:
+  #cd terraform  
+  #terraform destroy -auto-approve
 
   
 Published by: Luis Francisco   
