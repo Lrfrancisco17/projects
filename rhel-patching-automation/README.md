@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-# projects
-These are my github projects
-=======
-Infrastructure Automation: 
+
+Infrastructure Automation Project: 
 
 Terraform + Ansible (RHEL & Ubuntu)
 This repository provides a complete, end‑to‑end automation stack that deploys:
@@ -28,4 +25,3 @@ Contact: lrfrancisco17@gmail.com
 Social: https://www.linkedin.com/in/luisfrancisco  
 Certifications: https://www.credly.com/users/luisfrancisco  
 Youtube: https://www.youtube.com/@Innovationlu  
->>>>>>> rhel-patching-automation/main
