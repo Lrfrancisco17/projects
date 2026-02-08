@@ -78,7 +78,7 @@ ansible_user=ansible
 
 
 ---- Test Connectivity with Ansible ----  
-1. SSH into the controller using its public IP:
+1. SSH into the controller using its public IP:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>
 
 2. Once inside the controller, run:  
@@ -95,7 +95,7 @@ Run Rollback Playbook:
 
 --- Destroy the Environment ---
 
-When you're done:
+When you're done:  
   #cd terraform  
   #terraform destroy -auto-approve  
 
