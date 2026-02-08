@@ -78,11 +78,12 @@ ansible_user=ansible
 
 
 ---- Test Connectivity with Ansible ----  
-Move into the Ansible directory:  
-   #cd ansible
+1. SSH into controller using its public IP:
+     #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>
 
-Ping all hosts: (You should see successful responses from all three nodes)  
-  #ansible-playbook playbooks/ping.yml  
+2. Once inside the controller, run:
+     #cd /home/ansible/lab/ansible
+     #ansible-playbook playbooks/ping.yml
 
 ---- Run Patch Playbook ----
 
