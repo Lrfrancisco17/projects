@@ -78,12 +78,12 @@ ansible_user=ansible
 
 
 ---- Test Connectivity with Ansible ----  
-1. SSH into controller using its public IP:
+1. SSH into the controller using its public IP:
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>
 
-2. Once inside the controller, run:
-     #cd /home/ansible/lab/ansible
-     #ansible-playbook playbooks/ping.yml
+2. Once inside the controller, run:  
+     #cd /home/ansible/lab/ansible  
+     #ansible-playbook playbooks/ping.yml  
 
 ---- Run Patch Playbook ----
 
