@@ -51,12 +51,13 @@ terraform plan
 
 terraform apply -auto-approve
 
-Terraform will create:
-*VPC, subnet, route table, IGW
-*Security group for SSH
-*Controller EC2 instance
-*RHEL 10 EC2 instance
-*Ubuntu EC2 instance
+Terraform will create:  
+
+* VPC, subnet, route table, IGW
+* Security group for SSH
+* Controller EC2 instance
+* RHEL 10 EC2 instance
+* Ubuntu EC2 instance
 
 command
 terraform init
