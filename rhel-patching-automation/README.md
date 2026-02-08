@@ -82,21 +82,27 @@ Move into the Ansible directory:
    #cd ansible
 
 Ping all hosts: (You should see successful responses from all three nodes)  
-  #ansible-playbook playbooks/ping.yml
+  #ansible-playbook playbooks/ping.yml  
 
 ---- Run Patch Playbook ----
 
 Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)  
-  #ansible-playbook playbooks/patch.yml
+  #ansible-playbook playbooks/patch.yml  
 
 Run Rollback Playbook:  
-  #ansible-playbook playbooks/rollback.yml
+  #ansible-playbook playbooks/rollback.yml  
 
 --- Destroy the Environment ---
 
 When you're done:
   #cd terraform  
-  #terraform destroy -auto-approve
+  #terraform destroy -auto-approve  
+
+---   Issue I ran into ---
+
+During testing, I ran into a failure caused by how AWS assigns Availability Zones. Initially, I allowed the aws_subnet resource to select an AZ automatically. AWS ended up placing the subnet in us‑east‑1e, which does not support t3.micro instances. As a result, all EC2 instance launches failed.
+
+To resolve this, I updated the subnet configuration to explicitly use us‑east‑1a, an Availability Zone that does support t3.micro instances. After setting the AZ manually, Terraform was able to deploy all instances successfully.
 
   
 Published by: Luis Francisco   
