@@ -19,6 +19,36 @@ Project Goals:
 *	Maintain a clean, modular, production‑ready repo structure
 *	Support GitLab CI/CD for validation and deployment
 
+
+---- Prerequisites ----
+Before using this lab, ensure you have:
+
+Terraform ≥ 1.5
+Ansible ≥ 2.15
+AWS CLI configured with a profile (default: lab)
+SSH key pair at ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
+
+If you need to generate a key:
+
+#ssh-keygen -t rsa -b 4096
+
+
+---- Deploying the Infrastructure ----
+
+Navigate into the Terraform directory:  
+
+#cd terraform-ansible-lab/terraform
+
+1. Initialize Terraform  
+   - terraform init
+
+
+command
+terraform init
+terraform apply -auto-approve
+terraform output inventory > ../ansible/inventory.ini
+
+
   
 Published by: Luis Francisco  
 Contact: lrfrancisco17@gmail.com  
