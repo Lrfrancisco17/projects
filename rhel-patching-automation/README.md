@@ -20,7 +20,7 @@ Project Goals:
 *	Support GitLab CI/CD for validation and deployment
 
 
----- Prerequisites ----
+---- Prerequisites ----  
 Before using this lab, ensure you have:
 
 Terraform ≥ 1.5
@@ -31,6 +31,7 @@ SSH key pair at ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
 If you need to generate a key:
    #ssh-keygen -t rsa -b 4096
 
+  
 
 ---- Deploying the Infrastructure via Terraform ----
 
