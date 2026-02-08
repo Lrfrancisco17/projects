@@ -1,0 +1,14 @@
+#cloud-config
+packages:
+  - ansible-core
+  - git
+  - python3
+
+users:
+  - name: ansible
+    groups: sudo
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-authorized-keys:
+      - ${file("~/.ssh/id_rsa.pub")}
+

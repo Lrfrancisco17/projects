@@ -1,30 +1,88 @@
-terraform {
-  required_version = ">= 1.5.0"
+########################
+# Networking
+########################
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 6.0"
-    }
+resource "aws_vpc" "lab" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "lab-vpc"
   }
 }
 
-provider "aws" {
-  region  = "us-east-1"
-  profile = "lab"
+resource "aws_internet_gateway" "lab" {
+  vpc_id = aws_vpc.lab.id
+
+  tags = {
+    Name = "lab-igw"
+  }
 }
 
-variable "instance_type" {
-  type        = string
-  description = "EC2 instance type"
-  default     = "t3.micro"
+resource "aws_subnet" "lab" {
+  vpc_id                  = aws_vpc.lab.id
+  cidr_block              = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "lab-subnet"
+  }
 }
 
-variable "tags" {
-  type = map(string)
-  default = {
-    Name = "rhel10-t3-micro"
-    Env  = "lab"
+resource "aws_route_table" "lab" {
+  vpc_id = aws_vpc.lab.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.lab.id
+  }
+
+  tags = {
+    Name = "lab-rt"
+  }
+}
+
+resource "aws_route_table_association" "lab" {
+  subnet_id      = aws_subnet.lab.id
+  route_table_id = aws_route_table.lab.id
+}
+
+resource "aws_security_group" "ssh" {
+  name        = "lab-ssh"
+  description = "Allow SSH"
+  vpc_id      = aws_vpc.lab.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.ssh_ingress_cidr]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "lab-ssh"
+  }
+}
+
+########################
+# AMIs
+########################
+
+data "aws_ami" "controller" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64"]
   }
 }
 
@@ -38,12 +96,65 @@ data "aws_ami" "rhel10" {
   }
 }
 
-resource "aws_instance" "rhel10_t3_micro" {
-  ami           = data.aws_ami.rhel10.id
-  instance_type = var.instance_type
-  tags          = var.tags
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
 }
 
-output "instance_public_ip" {
-  value = aws_instance.rhel10_t3_micro.public_ip
+########################
+# Instances (modules)
+########################
+
+module "controller" {
+  source          = "./modules/ec2-instance"
+  ami             = data.aws_ami.controller.id
+  instance_type   = var.instance_type
+  subnet_id       = aws_subnet.lab.id
+  security_groups = [aws_security_group.ssh.id]
+  cloud_init      = "${path.module}/cloud-init/controller.yml"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+
+  tags = {
+    Name = "ansible-controller"
+    Env  = "lab"
+    Role = "controller"
+  }
 }
+
+module "rhel10" {
+  source          = "./modules/ec2-instance"
+  ami             = data.aws_ami.rhel10.id
+  instance_type   = var.instance_type
+  subnet_id       = aws_subnet.lab.id
+  security_groups = [aws_security_group.ssh.id]
+  cloud_init      = "${path.module}/cloud-init/rhel.yml"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+
+  tags = {
+    Name = "rhel10-managed"
+    Env  = "lab"
+    Role = "managed"
+  }
+}
+
+module "ubuntu" {
+  source          = "./modules/ec2-instance"
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = var.instance_type
+  subnet_id       = aws_subnet.lab.id
+  security_groups = [aws_security_group.ssh.id]
+  cloud_init      = "${path.module}/cloud-init/ubuntu.yml"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+
+  tags = {
+    Name = "ubuntu-managed"
+    Env  = "lab"
+    Role = "managed"
+  }
+}
+
