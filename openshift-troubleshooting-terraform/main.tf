@@ -1,14 +1,5 @@
-terraform {
-  required_version = ">= 1.5.0"
-
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.29"
-    }
+resource "kubernetes_namespace" "lab" {
+  metadata {
+    name = var.namespace
   }
-}
-
-provider "kubernetes" {
-  config_path = var.kubeconfig_path
 }
