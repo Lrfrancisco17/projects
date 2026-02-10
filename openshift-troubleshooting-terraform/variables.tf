@@ -4,3 +4,9 @@ variable "kubeconfig_path" {
   type        = string
   default     = "~/.kube/config"
 }
+
+variable "namespace" {
+  description = "Namespace to deploy the lab into"
+  type        = string
+  default     = "troubleshooting-lab"
+}
