@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "lab" {
   }
 }
 
-resource "aws_subnet" "lab" {
+resource "aws_subnet" "lab" {                       # Note to future self: I want to configure ipv6 to future-proof networking 
   vpc_id                  = aws_vpc.lab.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
