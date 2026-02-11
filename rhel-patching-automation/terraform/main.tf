@@ -118,7 +118,7 @@ module "controller" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/controller.yml"
-  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub"
 
   tags = {
     Name = "ansible-controller"
@@ -134,7 +134,7 @@ module "rhel10" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/rhel.yml"
-  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub"
 
   tags = {
     Name = "rhel10-managed"
@@ -150,8 +150,9 @@ module "ubuntu" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/ubuntu.yml"
-  ssh_pubkey_path = var.ansible_ssh_pubkey_path
-
+ #ssh_pubkey_path = var.ansible_ssh_pubkey_path
+  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub" 
+ 
   tags = {
     Name = "ubuntu-managed"
     Env  = "lab"
