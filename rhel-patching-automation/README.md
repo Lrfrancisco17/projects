@@ -95,7 +95,7 @@ ansible_user=ansible
    #git clone git@github.com:username/ansible.git
 
 5. Run Ansible ping command:
-   # cd ~/ansible  
+   #cd ~/ansible  
    #ansible-playbook /playbooks/ping.yml
    
 
