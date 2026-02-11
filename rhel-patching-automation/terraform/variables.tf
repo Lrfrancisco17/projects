@@ -24,7 +24,7 @@ variable "ssh_ingress_cidr" {
 
 variable "ansible_ssh_pubkey_path" {
   type        = string
-  default     = "/home/lrf/.ssh/id_rsa.pub"
+  default     = "~/.ssh/id_rsa.pub"
   description = "Path to your local SSH public key"
 }
 
