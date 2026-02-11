@@ -91,12 +91,12 @@ ansible_user=ansible
 3. Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
      #cat ~/.ssh/id_ed25519.pub  
 
-4. Then clone using SSH:
+4. Then clone using SSH:  
    #git clone git@github.com:username/ansible.git
 
-5. Run Ansible ping command:
+5. Run Ansible ping command:  
    #cd ~/ansible  
-   #ansible-playbook /playbooks/ping.yml
+   #ansible-playbook /playbooks/ping.yml  
    
 
 ############## Run Patch Playbook ##############
