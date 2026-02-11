@@ -82,20 +82,17 @@ ansible_user=ansible
 
 ############ NOTE: I suggest creating a repository with only the Ansible configurations and playbooks, excluding the Terraform environment from the Ansible controller node.  
 
-1. Copy local private key over:
-   #scp -i ~/.ssh/id_rsa ~/.ssh/id_rsa ansible@<controller_public_ip>:~/.ssh/
-   # scp -i ~/.ssh/id_rsa ~/.ssh/id_rsa ansible@<controller_public_ip>:~/.ssh/
 
-2. SSH into the controller using its public IP you received from the  terrafom output:  
+1. SSH into the controller using its public IP you received from the  terrafom output:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
-3. Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
+2. Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
      #cat ~/.ssh/id_rsa.pub  
 
-4. Then clone using SSH:  
+3. Then clone using SSH:  
    #git clone git@github.com:username/ansible.git
 
-5. Run Ansible ping command:  
+4. Run Ansible ping command:  
    #cd ~/ansible  
    #ansible-playbook /playbooks/ping.yml  
    
