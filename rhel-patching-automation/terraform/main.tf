@@ -61,6 +61,21 @@ resource "aws_security_group" "ssh" {
     cidr_blocks = [var.ssh_ingress_cidr]
   }
 
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.1.0/24"]
+}
+ 
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["10.0.1.0/24"]
+}
+
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -118,7 +133,7 @@ module "controller" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/controller.yml"
-  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
 
   tags = {
     Name = "ansible-controller"
@@ -134,7 +149,7 @@ module "rhel10" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/rhel.yml"
-  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
 
   tags = {
     Name = "rhel10-managed"
@@ -150,8 +165,7 @@ module "ubuntu" {
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/ubuntu.yml"
- #ssh_pubkey_path = var.ansible_ssh_pubkey_path
-  ssh_pubkey_path = "${path.home}/.ssh/id_rsa.pub" 
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
  
   tags = {
     Name = "ubuntu-managed"
