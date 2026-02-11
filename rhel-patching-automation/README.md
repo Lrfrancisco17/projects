@@ -64,6 +64,7 @@ terraform output inventory > ../ansible/inventory.ini
 
 This file will look like:
 
+controller_public_ip = "XX.XX.XX.XXX"
 [controller]
 10.0.1.x
 
