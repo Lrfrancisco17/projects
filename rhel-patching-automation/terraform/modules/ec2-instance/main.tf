@@ -9,5 +9,30 @@ resource "aws_instance" "this" {
   })
 
   tags = var.tags
+
+  connection {
+    type        = "ssh"
+    user        = "ansible"
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.public_ip
+  }
+
+  provisioner "file" {
+    source      = "~/.ssh/id_rsa"
+    destination = "/home/ansible/.ssh/id_rsa"
+  }
+
+  provisioner "file" {
+    source      = "~/.ssh/id_rsa.pub"
+    destination = "/home/ansible/.ssh/id_rsa.pub"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod 600 /home/ansible/.ssh/id_rsa",
+      "chmod 644 /home/ansible/.ssh/id_rsa.pub",
+      "chown ansible:ansible /home/ansible/.ssh/id_rsa*"
+    ]
+  }
 }
 

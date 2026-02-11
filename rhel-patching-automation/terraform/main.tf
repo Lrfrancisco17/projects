@@ -135,7 +135,6 @@ module "controller" {
   cloud_init      = "${path.module}/cloud-init/controller.yml"
   ssh_pubkey_path = var.ansible_ssh_pubkey_path
 
-
   tags = {
     Name = "ansible-controller"
     Env  = "lab"
