@@ -16,4 +16,6 @@ ssh_pwauth: false
 
 runcmd:
   - hostnamectl set-hostname controller
-
+  - sudo -u ansible git clone https://github.com/Lrfrancisco17/ansible.git /home/ansible/github
+  - rm -rf /home/ansible/github/* except playbooks
+  - chown -R ansible:ansible /home/ansible/lab
