@@ -78,12 +78,18 @@ ansible_user=ansible
 
 
 ---- Test Connectivity with Ansible ----  
-1. SSH into the controller using its public IP:  
-     #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>
+1. SSH into the controller using its public IP you received from the  terrafom output:  
+     #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
-2. Once inside the controller, run:  
-     #cd /home/ansible/lab/ansible  
-     #ansible-playbook playbooks/ping.yml  
+2.Generate a key:  
+     #ssh-keygen -t ed25519 -C "controller"  
+     
+3.Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
+     #cat ~/.ssh/id_ed25519.pub  
+
+4.Then clone using SSH:
+   #git clone git@github.com:username/projects.git
+
 
 ---- Run Patch Playbook ----
 
