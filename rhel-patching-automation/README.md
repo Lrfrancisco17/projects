@@ -20,7 +20,7 @@ Project Goals:
 *	Support GitLab CI/CD for validation and deployment
 
 
----- Prerequisites ----  
+############## Prerequisites ##############  
 Before using this lab, ensure you have:
 
 Terraform ≥ 1.5
@@ -33,7 +33,7 @@ If you need to generate a key:
 
   
 
----- Deploying the Infrastructure via Terraform ----
+############## Deploying the Infrastructure via Terraform ##############
 
 1. Navigate into the Terraform directory:  
    #cd terraform-ansible-lab/terraform
@@ -78,21 +78,21 @@ controller_public_ip = "XX.XX.XX.XXX"
 ansible_user=ansible
 
 
----- Test Connectivity with Ansible ----  
+############## Test Connectivity with Ansible ##############  
 1. SSH into the controller using its public IP you received from the  terrafom output:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
-2.Generate a key:  
+2. Generate a key:  
      #ssh-keygen -t ed25519 -C "controller"  
      
-3.Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
+3. Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
      #cat ~/.ssh/id_ed25519.pub  
 
-4.Then clone using SSH:
+4. Then clone using SSH:
    #git clone git@github.com:username/projects.git
 
 
----- Run Patch Playbook ----
+############## Run Patch Playbook ##############
 
 Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)  
   #ansible-playbook playbooks/patch.yml  
@@ -100,13 +100,13 @@ Apply OS updates across all nodes: (This automatically handles yum updates for R
 Run Rollback Playbook:  
   #ansible-playbook playbooks/rollback.yml  
 
---- Destroy the Environment ---
+############## Destroy the Environment ##############
 
 When you're done:  
   #cd terraform  
   #terraform destroy -auto-approve  
 
----   Issue I ran into ---
+##############  Issue I ran into ##############
 
 During testing, I ran into a failure caused by how AWS assigns Availability Zones. Initially, I allowed the aws_subnet resource to select an AZ automatically. AWS ended up placing the subnet in us‑east‑1e, which does not support t3.micro instances. As a result, all EC2 instance launches failed.
 
