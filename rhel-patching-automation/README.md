@@ -79,6 +79,9 @@ ansible_user=ansible
 
 
 ############## Test Connectivity with Ansible ##############  
+
+############ NOTE: I suggest creating a repository with only the Ansible configurations and playbooks, excluding the Terraform environment from the Ansible controller node.  
+
 1. SSH into the controller using its public IP you received from the  terrafom output:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
@@ -89,8 +92,12 @@ ansible_user=ansible
      #cat ~/.ssh/id_ed25519.pub  
 
 4. Then clone using SSH:
-   #git clone git@github.com:username/projects.git
+   #git clone git@github.com:username/ansible.git
 
+5. Run Ansible ping command:
+   # cd ~/ansible  
+   #ansible-playbook /playbooks/ping.yml
+   
 
 ############## Run Patch Playbook ##############
 
