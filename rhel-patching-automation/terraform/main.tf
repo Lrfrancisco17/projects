@@ -135,12 +135,14 @@ module "controller" {
   cloud_init      = "${path.module}/cloud-init/controller.yml"
   ssh_pubkey_path = var.ansible_ssh_pubkey_path
 
+
   tags = {
     Name = "ansible-controller"
     Env  = "lab"
     Role = "controller"
   }
 }
+
 
 module "rhel10" {
   source          = "./modules/ec2-instance"
@@ -150,6 +152,7 @@ module "rhel10" {
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/rhel.yml"
   ssh_pubkey_path = var.ansible_ssh_pubkey_path
+
 
   tags = {
     Name = "rhel10-managed"

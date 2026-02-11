@@ -5,7 +5,7 @@ resource "aws_instance" "this" {
   vpc_security_group_ids = var.security_groups
 
   user_data = templatefile(var.cloud_init, {
-    ssh_pubkey = file(var.ssh_pubkey_path)
+    ssh_pubkey = var.ssh_pubkey_path != null ? file(var.ssh_pubkey_path) : ""
   })
 
   tags = var.tags
