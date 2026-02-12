@@ -70,7 +70,16 @@ resource "null_resource" "deploy_key" {
   provisioner "remote-exec" {
     inline = [
       "chmod 600 /home/ansible/.ssh/project_deploy_key",
-      "chown ansible:ansible /home/ansible/.ssh/project_deploy_key"
+      "chown ansible:ansible /home/ansible/.ssh/project_deploy_key",
+      
+      # Make sure GitHub is trusted
+      "ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts",
+
+      # Clone the repo using the deploy key
+      "GIT_SSH_COMMAND='ssh -i /home/ansible/.ssh/project_deploy_key -o StrictHostKeyChecking=no' git clone ${var.repo_url} /home/ansible/project",
+
+      # Fix permissions
+      "chown -R ansible:ansible /home/ansible/project"
     ]
   }
 }

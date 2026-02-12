@@ -135,6 +135,7 @@ module "controller" {
   cloud_init      = "${path.module}/cloud-init/controller.yml"
   ssh_pubkey_path = var.ansible_ssh_pubkey_path
   deploy_key_private_path = "~/.ssh/project_deploy_key"
+  repo_url = "https://github.com/Lrfrancisco17/projects.git"   ###### <<<<< change this url to point to your github repo
   
   tags = {
     Name = "ansible-controller"

@@ -14,3 +14,9 @@ variable "deploy_key_private_path" {
   default   = null
 }
 
+variable "repo_url" {
+  description = "SSH URL of the Git repo to clone"
+  type        = string
+  default     = null
+}
+
