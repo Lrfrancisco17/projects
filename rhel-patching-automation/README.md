@@ -26,11 +26,39 @@ Before using this lab, ensure you have:
 Terraform ≥ 1.5
 Ansible ≥ 2.15
 AWS CLI configured with a profile (default: lab)
-SSH key pair at ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
+1. Make sure you have a personal SSH key pair
+These keys live in ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub.  
 
-If you need to generate a key:  
-   #ssh-keygen -t rsa -b 4096  
+If you don’t already have them, generate a new pair:  
 
+#ssh-keygen -t rsa -b 4096  
+This creates:  
+~/.ssh/id_rsa (private key)  
+~/.ssh/id_rsa.pub (public key)  
+
+2. Create a GitHub deploy key for your project  
+This key will be used only by your controller node to clone your repo.  
+
+Generate it:  
+#ssh-keygen -t ed25519 -f ~/.ssh/project_deploy_key -C "deploy-key-project"
+
+This creates:  
+~/.ssh/project_deploy_key (private key)  
+~/.ssh/project_deploy_key.pub (public key)  
+
+3. Add the deploy key to your GitHub repository  
+Make sure you’ve already copied my repo into your own GitHub account.  
+
+Then:  
+Open your GitHub repository
+Go to Settings → Deploy keys   
+
+Click Add deploy key   
+Paste the contents of project_deploy_key.pub into the key field  
+
+Enable Read access
+
+Save
   
 
 ############## Deploying the Infrastructure via Terraform ##############
