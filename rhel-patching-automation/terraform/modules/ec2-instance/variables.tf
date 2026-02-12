@@ -9,3 +9,8 @@ variable "ssh_pubkey_path" {
   default = null
 }
 
+variable "deploy_key_private_path" {
+  type      = string
+  default   = null
+}
+

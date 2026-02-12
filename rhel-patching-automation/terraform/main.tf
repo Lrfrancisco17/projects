@@ -134,7 +134,8 @@ module "controller" {
   security_groups = [aws_security_group.ssh.id]
   cloud_init      = "${path.module}/cloud-init/controller.yml"
   ssh_pubkey_path = var.ansible_ssh_pubkey_path
-
+  deploy_key_private_path = "~/.ssh/project_deploy_key"
+  
   tags = {
     Name = "ansible-controller"
     Env  = "lab"
