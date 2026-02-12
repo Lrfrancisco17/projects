@@ -63,20 +63,31 @@ Save
 
 ############## Deploying the Infrastructure via Terraform ##############
 
-1. Navigate into the Terraform directory:  
-   #cd terraform-ansible-lab/terraform
+1. Download the project folder to your local machine  
+   #curl -L https://github.com/Lrfrancisco17/projects/archive/refs/heads/main.zip -o repo.zip
+unzip repo.zip "projects-main/rhel-patching-automation/*"  
 
-2. Initialize Terraform  
+This extracts only the rhel-patching-automation folder from your repo.  
 
-   #terraform init
+2. Navigate into the Terraform directory  
+   #cd projects-main/rhel-patching-automation/terraform  
 
-3. Review the plan
+3. (Optional) Update the Git repository URL  
+    If you want the controller node to automatically clone your own Ansible repo with patching playbooks, update the repo_url value in:
+    #vi terraform/main.tf  
+    Look for this line (around line 138):
 
-    #terraform plan
+    repo_url = "https://github.com/Lrfrancisco17/projects.git"  
+    Replace it with your Git repo URL if needed.  
 
-4. Deploy the environment
+4. Initialize Terraform  
+    #terraform init  
 
-    #terraform apply -auto-approve
+5. Review the execution plan  
+   #terraform plan  
+
+6. Deploy the environment  
+   #terraform apply -auto-approve  
  
 
 Terraform will create:  
