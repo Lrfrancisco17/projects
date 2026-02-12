@@ -23,15 +23,16 @@ Project Goals:
 ############## Prerequisites ##############  
 Before using this lab, ensure you have:
 
-Terraform ≥ 1.5
-Ansible ≥ 2.15
-AWS CLI configured with a profile (default: lab)
-1. Make sure you have a personal SSH key pair
+Terraform ≥ 1.5  
+Ansible ≥ 2.15  
+AWS CLI configured with a profile (default: lab)  
+1. Make sure you have a personal SSH key pair  
 These keys live in ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub.  
 
 If you don’t already have them, generate a new pair:  
 
 #ssh-keygen -t rsa -b 4096  
+
 This creates:  
 ~/.ssh/id_rsa (private key)  
 ~/.ssh/id_rsa.pub (public key)  
@@ -67,7 +68,7 @@ Save
    #curl -L https://github.com/Lrfrancisco17/projects/archive/refs/heads/main.zip -o repo.zip
 unzip repo.zip "projects-main/rhel-patching-automation/*"  
 
-This extracts only the rhel-patching-automation folder from your repo.  
+This extracts only the rhel-patching-automation folder from my repo.  
 
 2. Navigate into the Terraform directory  
    #cd projects-main/rhel-patching-automation/terraform  
@@ -119,17 +120,8 @@ ansible_user=ansible
 
 ############## Test Connectivity with Ansible ##############  
 
-############ NOTE: I suggest creating a repository with only the Ansible configurations and playbooks, excluding the Terraform environment from the Ansible controller node.  
-
-
 1. SSH into the controller using its public IP you received from the  terrafom output:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
-
-2. Show the public key and copy it to repos GitHub → Settings → SSH and GPG keys → New SSH key  
-     #cat ~/.ssh/id_rsa.pub  
-
-3. Then clone using SSH:  
-   #git clone git@github.com:username/ansible.git
 
 4. Run Ansible ping command:  
    #cd ~/ansible  
