@@ -19,5 +19,15 @@
 Apply OS updates across all nodes: (This automatically handles yum updates for RHEL & apt updates for Ubuntu)  
   #ansible-playbook playbooks/patch.yml  
 
-Run Rollback Playbook:  
-  #ansible-playbook playbooks/rollback.yml  
+  #ansible-playbook playbooks/patch.yml  
+
+
+RHEL: rollback transaction 45 example and kernel:  
+  #ansible-playbook rollback.yml -e rhel_rollback_id=45 -e rollback_kernel=true
+
+
+Ubuntu: rollback specific packages and kernel:  
+
+  #ansible-playbook rollback.yml \  
+     -e 'ubuntu_package_rollbacks=[{"name":"openssl","version":"1.1.1f-1ubuntu2"}]' \  
+     -e rollback_kernel=true  
