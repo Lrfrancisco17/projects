@@ -124,7 +124,7 @@ ansible_user=ansible
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
 4. Run Ansible ping command:  
-   #cd ~/ansible  
+   #cd ~/github/rhel-patching-automation/ansible  
    #ansible-playbook /playbooks/ping.yml  
    
 

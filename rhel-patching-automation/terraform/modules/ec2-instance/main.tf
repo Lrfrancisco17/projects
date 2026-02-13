@@ -69,17 +69,22 @@ resource "null_resource" "deploy_key" {
 
   provisioner "remote-exec" {
     inline = [
+      "sleep 60",
       "chmod 600 /home/ansible/.ssh/project_deploy_key",
       "chown ansible:ansible /home/ansible/.ssh/project_deploy_key",
-      
-      # Make sure GitHub is trusted
       "ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts",
-
-      # Clone the repo using the deploy key
-      "GIT_SSH_COMMAND='ssh -i /home/ansible/.ssh/project_deploy_key -o StrictHostKeyChecking=no' git clone ${var.repo_url} /home/ansible/project",
-
-      # Fix permissions
-      "chown -R ansible:ansible /home/ansible/project"
+      "mkdir -p /home/ansible/github/",
+      "cd /home/ansible/github && git init",
+      "cd /home/ansible/github && git remote add origin ${var.repo_url}",
+      "cd /home/ansible/github && git config core.sparseCheckout true",
+      "echo 'ansible/' >> /home/ansible/github/.git/info/sparse-checkout",
+      "cd /home/ansible/github && GIT_SSH_COMMAND=\"ssh -i /home/ansible/.ssh/project_deploy_key -o StrictHostKeyChecking=no\" git pull origin main",
+      "chown -R ansible:ansible /home/ansible/github",
+    
+  
+   #   "GIT_SSH_COMMAND=\"ssh -i /home/ansible/.ssh/project_deploy_key -o StrictHostKeyChecking=no\" git clone ${var.repo_url} /home/ansible/github/ansible",
+   #   "find /home/ansible/github -mindepth 1 -maxdepth 1 ! -name 'ansible' -exec rm -rf {} +",
+   #   "chown -R ansible:ansible /home/ansible/"
     ]
   }
 }
