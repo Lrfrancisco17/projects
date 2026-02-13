@@ -5,7 +5,6 @@ Terraform + AWS + Ansible (RHEL & Ubuntu)
 This repository provides a complete, end‑to‑end automation stack that deploys:
 
 
-*       full end to end Infrastructure Automation stack  
 *	1 RHEL 10 Ansible Controller Node  
 *	1 RHEL 10 Managed Node  
 *	1 Ubuntu Managed Node  
