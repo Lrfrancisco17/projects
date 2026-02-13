@@ -20,7 +20,8 @@ Project Goals:
 *	Provide a unified Ansible playbook for Patching RHEL & Ubuntu
 *	Rolling back patches (OS‑specific logic)
 *	Maintain a clean, modular, production‑ready repo structure
-*	Support GitLab CI/CD for validation and deployment  
+*       Automated Gitub configureation
+*	Support Github CI/CD for validation and deployment  
   
   
 ############## Prerequisites ##############  
