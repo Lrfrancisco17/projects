@@ -123,8 +123,14 @@ ansible_user=ansible
 1. SSH into the controller using its public IP you received from the  terrafom output:  
      #ssh -i ~/.ssh/id_rsa ansible@<controller_public_ip>  
 
-4. Run Ansible ping command:  
+2. Change directory into ansible folder:    
    #cd ~/github/rhel-patching-automation/ansible  
+  
+3. Copy inventory output from terrraform and past it into inventory.ini  
+   #vi invenory.ini  
+    paste & save  
+
+2. Run Ansible ping command:  
    #ansible-playbook /playbooks/ping.yml  
    
 
