@@ -4,9 +4,13 @@ Infrastructure Automation Project:
 Terraform + Ansible (RHEL & Ubuntu)
 This repository provides a complete, end‑to‑end automation stack that deploys:
 
-*	Ansible Controller Node
-*	RHEL 10 Managed Node
-*	Ubuntu Managed Node
+
+*       AWS EC2 end‑to‑end Infrastructure Automation stack 
+*	1RHEL 10 Ansible Controller Node  
+*	1 RHEL 10 Managed Node  
+*	1 Ubuntu Managed Node  
+
+
 
 All infrastructure is created using Terraform, and all configuration, patching, and rollback operations are handled by Ansible. Each server is bootstrapped with a default Ansible user, SSH keys, and passwordless sudo via cloud-init, enabling immediate automation with no manual steps.
 
