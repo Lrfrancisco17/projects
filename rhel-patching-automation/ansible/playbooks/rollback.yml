@@ -1,10 +1,81 @@
 ---
-- name: Dummy rollback playbook
+- name: Roll back patches on RHEL and Ubuntu
   hosts: all
-  become: true
+  become: yes
+  gather_facts: yes
+
+  vars:
+    # RHEL: dnf history ID to undo (e.g. 45). Leave empty to skip.
+    rhel_rollback_id: ""
+
+    # Ubuntu: list of packages to pin to a specific version
+    # Example:
+    # ubuntu_package_rollbacks:
+    #   - { name: "openssl", version: "1.1.1f-1ubuntu2" }
+    ubuntu_package_rollbacks: []
+
+    # Roll back kernel? (both RHEL and Ubuntu)
+    rollback_kernel: false
 
   tasks:
-    - name: Show message
-      ansible.builtin.debug:
-        msg: "Rollback logic would go here (snapshots, package versions, etc.)"
+
+    #######################################################################
+    # RHEL / Rocky / AlmaLinux
+    #######################################################################
+    - name: Roll back RHEL packages using dnf history undo
+      when:
+        - ansible_facts.os_family == "RedHat"
+        - rhel_rollback_id | length > 0
+      ansible.builtin.command: >
+        dnf history undo {{ rhel_rollback_id }} -y
+      register: rhel_rollback
+      changed_when: "'Complete!' in rhel_rollback.stdout"
+
+    - name: Roll back kernel on RHEL (set previous kernel as default)
+      when:
+        - ansible_facts.os_family == "RedHat"
+        - rollback_kernel
+      block:
+        - name: Get list of installed kernels
+          ansible.builtin.command: rpm -q kernel
+          register: kernel_list
+
+        - name: Fail if fewer than 2 kernels installed
+          ansible.builtin.fail:
+            msg: "Not enough kernels installed to roll back."
+          when: kernel_list.stdout_lines | length < 2
+
+        - name: Select previous kernel (second to last)
+          ansible.builtin.set_fact:
+            previous_kernel: "{{ kernel_list.stdout_lines[-2] | regex_replace('kernel-', '') }}"
+
+        - name: Set previous kernel as default using grubby
+          ansible.builtin.command: >
+            grubby --set-default /boot/vmlinuz-{{ previous_kernel }}
+
+    #######################################################################
+    # Ubuntu / Debian
+    #######################################################################
+    - name: Roll back specific packages on Ubuntu by version
+      when:
+        - ansible_facts.os_family == "Debian"
+        - ubuntu_package_rollbacks | length > 0
+      ansible.builtin.apt:
+        name: "{{ item.name }}={{ item.version }}"
+        state: present
+      loop: "{{ ubuntu_package_rollbacks }}"
+      register: ubuntu_pkg_rollback
+
+    - name: Roll back kernel on Ubuntu
+      when:
+        - ansible_facts.os_family == "Debian"
+        - rollback_kernel
+      block:
+        - name: Install previous kernel package (example)
+          ansible.builtin.apt:
+            name: "linux-image-generic"
+            state: present
+
+        - name: Update GRUB
+          ansible.builtin.command: update-grub
 
