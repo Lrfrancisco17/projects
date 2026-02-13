@@ -1,12 +1,12 @@
 
 Infrastructure Automation Project: 
 
-Terraform + Ansible (RHEL & Ubuntu)
+Terraform + AWS + Ansible (RHEL & Ubuntu)
 This repository provides a complete, end‑to‑end automation stack that deploys:
 
 
-*       AWS EC2 end‑to‑end Infrastructure Automation stack 
-*	1RHEL 10 Ansible Controller Node  
+*       full end to end Infrastructure Automation stack  
+*	1 RHEL 10 Ansible Controller Node  
 *	1 RHEL 10 Managed Node  
 *	1 Ubuntu Managed Node  
 
