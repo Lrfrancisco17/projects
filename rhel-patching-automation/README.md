@@ -1,6 +1,6 @@
 
 
-[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/full_terraform_prj_thumnail.png)](https://raw.githubusercontent.com/yourusername/yourrepository/main/assets/video.mp4)
+[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/full_terraform_prj_thumnail.png)](https://www.youtube.com/watch?v=VoFaZ2rkyGw)
 
 
 Infrastructure Automation Project: 
