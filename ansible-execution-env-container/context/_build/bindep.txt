@@ -1,3 +1,0 @@
-sshpass
-git
-openssh-clients
