@@ -2,11 +2,12 @@ version: 3
 
 images:
   base_image:
-    name: quay.io/ansible/ansible-runner:latest
+    name: quay.io/ansible/ansible-builder:latest
 
 dependencies:
   ansible_core:
     package_pip: ansible-core
+  
   ansible_runner:
     package_pip: ansible-runner
 
@@ -22,4 +23,3 @@ dependencies:
   galaxy:
     collections:
       - requirements.yml
-
