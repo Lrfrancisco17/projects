@@ -1,4 +1,8 @@
 
+
+[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/full_terraform_prj_thumnail.png)](https://raw.githubusercontent.com/yourusername/yourrepository/main/assets/video.mp4)
+
+
 Infrastructure Automation Project: 
 
 Terraform + AWS + Ansible (RHEL & Ubuntu)
