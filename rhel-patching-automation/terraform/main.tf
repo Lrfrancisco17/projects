@@ -128,7 +128,7 @@ data "aws_ami" "ubuntu" {
 
 module "controller" {
   source          = "./modules/ec2-instance"
-  ami             = data.aws_ami.controller.id
+  ami             = data.aws_ami.rhel10.id
   instance_type   = var.instance_type
   subnet_id       = aws_subnet.lab.id
   security_groups = [aws_security_group.ssh.id]
