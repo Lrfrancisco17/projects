@@ -12,6 +12,3 @@
 - name: Fetch results to control node
   include_tasks: fetch.yml
 
-- name: Upload results to S3
-  include_tasks: upload_s3.yml
-
