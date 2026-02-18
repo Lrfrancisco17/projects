@@ -1,0 +1,7 @@
+---
+report_dir_remote: "/tmp/oscap"
+report_dir_local: "/var/reports/oscap"
+benchmark: "/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
+profile: "xccdf_org.ssgproject.content_profile_cis"
+s3_bucket: "my-oscap-results"
+

@@ -1,0 +1,20 @@
+---
+- name: Create local directory for this host and timestamp
+  delegate_to: localhost
+  file:
+    path: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}"
+    state: directory
+    mode: '0755'
+
+- name: Fetch XML results
+  fetch:
+    src: "{{ report_dir_remote }}/results-{{ scan_timestamp }}.xml"
+    dest: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/"
+    flat: yes
+
+- name: Fetch HTML report
+  fetch:
+    src: "{{ report_dir_remote }}/report-{{ scan_timestamp }}.html"
+    dest: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/"
+    flat: yes
+
