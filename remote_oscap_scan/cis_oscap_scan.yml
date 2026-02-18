@@ -1,6 +1,6 @@
 ---
 - name: Run CIS OpenSCAP scan using role
-  hosts: localhost
+  hosts: all
   become: yes
   roles:
     - oscap_scan

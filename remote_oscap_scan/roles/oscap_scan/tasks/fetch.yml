@@ -4,6 +4,9 @@
   file:
     path: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}"
     state: directory
+    state: directory
+    owner: ansible
+    group: ansible
     mode: '0755'
 
 - name: Fetch XML results
@@ -18,3 +21,12 @@
     dest: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/"
     flat: yes
 
+- name: Display location of fetched reports
+  delegate_to: localhost
+  debug:
+    msg: |
+      OpenSCAP scan results saved to:
+      {{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/
+
+      XML:  {{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/results-{{ scan_timestamp }}.xml
+      HTML: {{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/report-{{ scan_timestamp }}.html

@@ -6,9 +6,12 @@
 - name: Install OpenSCAP + SSG
   include_tasks: install.yml
 
+- name: Select correct benchmark for OS version
+  set_fact:
+    benchmark: "{{ benchmark_map[ansible_distribution_major_version] }}"
+
 - name: Run OpenSCAP scan
   include_tasks: scan.yml
 
 - name: Fetch results to control node
   include_tasks: fetch.yml
-
