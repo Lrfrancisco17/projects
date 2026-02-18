@@ -1,0 +1,18 @@
+---
+- name: Install OpenSCAP and SCAP Security Guide
+  package:
+    name:
+      - openscap-scanner
+      - scap-security-guide
+    state: present
+
+- name: Verify benchmark file exists
+  stat:
+    path: "{{ benchmark }}"
+  register: benchmark_check
+
+- name: Fail if benchmark file is missing
+  fail:
+    msg: "Benchmark file not found: {{ benchmark }}. Check SSG installation."
+  when: not benchmark_check.stat.exists
+

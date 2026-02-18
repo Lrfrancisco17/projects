@@ -1,0 +1,17 @@
+---
+- name: Set timestamp
+  set_fact:
+    scan_timestamp: "{{ ansible_date_time.date }}_{{ ansible_date_time.time | regex_replace(':', '-') }}"
+
+- name: Install OpenSCAP + SSG
+  include_tasks: install.yml
+
+- name: Run OpenSCAP scan
+  include_tasks: scan.yml
+
+- name: Fetch results to control node
+  include_tasks: fetch.yml
+
+- name: Upload results to S3
+  include_tasks: upload_s3.yml
+
