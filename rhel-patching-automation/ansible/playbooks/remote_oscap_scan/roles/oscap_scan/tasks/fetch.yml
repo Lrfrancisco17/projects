@@ -18,3 +18,11 @@
     dest: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}/"
     flat: yes
 
+- name: Create local directory for this host and timestamp
+  delegate_to: localhost
+  file:
+    path: "{{ report_dir_local }}/{{ inventory_hostname }}/{{ scan_timestamp }}"
+    state: directory
+    owner: ansible
+    group: ansible
+    mode: '0755'
