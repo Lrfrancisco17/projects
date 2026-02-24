@@ -1,1 +1,4 @@
----
+benchmark_map:
+  "8": "ssg-rhel8-ds.xml"
+  "9": "ssg-rhel9-ds.xml"
+  "10": "ssg-rhel10-ds.xml"
