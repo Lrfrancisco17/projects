@@ -1,6 +1,6 @@
 
 
-[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/tf_ansible_prj.jpg)](https://www.youtube.com/watch?v=VoFaZ2rkyGw)
+[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/tf_ansible_prj.png)](https://www.youtube.com/watch?v=VoFaZ2rkyGw)
 
 
 Infrastructure Automation Project: 
