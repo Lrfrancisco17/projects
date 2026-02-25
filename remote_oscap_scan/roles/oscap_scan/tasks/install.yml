@@ -1,9 +1,13 @@
-- name: Check if OpenSCAP is installedml
+---
+- name: Check if OpenSCAP is installed
   ansible.builtin.command: rpm -q openscap-scanner
   register: oscap_installed
   ignore_errors: true
 
 - name: Install OpenSCAP and SCAP Security Guide
-  ansible.builtin.command: >
-    dnf install -y openscap-scanner scap-security-guide
+  ansible.builtin.package:
+    name:
+      - openscap-scanner
+      - scap-security-guide
+    state: present
   when: oscap_installed.rc != 0

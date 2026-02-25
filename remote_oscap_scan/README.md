@@ -1,4 +1,7 @@
 Remote OpenSCAP CIS Automation with Ansible  
+
+Only run this on RHEL servers!
+
 A fully automated, end‑to‑end OpenSCAP CIS scanning workflow for RHEL‑based systems.  
 
 This project provides a production‑ready Ansible role and playbook that remotely installs OpenSCAP, selects the correct SCAP Security Guide content based on OS version, runs CIS benchmark scans, and fetches the results back to the control node in a clean, timestamped directory structure.  

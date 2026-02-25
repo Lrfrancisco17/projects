@@ -6,13 +6,12 @@
     mode: '0755'
 
 - name: Run OpenSCAP CIS scan
-  command: >
+  ansible.builtin.command: >
     oscap xccdf eval
     --profile {{ profile }}
     --results {{ report_dir_remote }}/results-{{ scan_timestamp }}.xml
     --report {{ report_dir_remote }}/report-{{ scan_timestamp }}.html
     {{ benchmark }}
-  args:
-    creates: "{{ report_dir_remote }}/results-{{ scan_timestamp }}.xml"
   register: oscap_result
   failed_when: oscap_result.rc not in [0, 2]
+  changed_when: true

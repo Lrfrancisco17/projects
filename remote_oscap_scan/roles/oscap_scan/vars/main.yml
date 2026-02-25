@@ -1,4 +1,4 @@
 benchmark_map:
-  "8": "/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
-  "9": "/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml"
-  "10": "/usr/share/xml/scap/ssg/content/ssg-rhel10-ds.xml"
+  "8": "ssg-rhel8-ds.xml"
+  "9": "ssg-rhel9-ds.xml"
+  "10": "ssg-rhel10-ds.xml"

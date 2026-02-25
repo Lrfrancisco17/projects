@@ -1,14 +1,14 @@
 ---
+- name: Determine correct SCAP benchmark for OS version
+  set_fact:
+    benchmark: "/usr/share/xml/scap/ssg/content/{{ benchmark_map[ansible_distribution_major_version] }}"
+
 - name: Set timestamp
   set_fact:
     scan_timestamp: "{{ ansible_date_time.date }}_{{ ansible_date_time.time | regex_replace(':', '-') }}"
 
 - name: Install OpenSCAP + SSG
   include_tasks: install.yml
-
-- name: Select correct benchmark for OS version
-  set_fact:
-    benchmark: "{{ benchmark_map[ansible_distribution_major_version] }}"
 
 - name: Run OpenSCAP scan
   include_tasks: scan.yml
