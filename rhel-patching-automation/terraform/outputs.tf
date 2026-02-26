@@ -9,6 +9,7 @@ ${module.controller.private_ip}
 
 [rhel]
 ${module.rhel10.private_ip}
+${module.rhel8.private_ip}
 
 [ubuntu]
 ${module.ubuntu.private_ip}

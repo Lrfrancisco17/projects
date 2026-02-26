@@ -1,0 +1,17 @@
+#cloud-config
+packages:
+  - python3
+
+users:
+  - name: ansible
+    groups: [wheel]
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-authorized-keys:
+      - ${ssh_pubkey}
+
+ssh_pwauth: false
+
+runcmd:
+  - hostnamectl set-hostname rhel8
+

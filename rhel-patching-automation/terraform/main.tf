@@ -102,6 +102,22 @@ data "aws_ami" "controller" {
   }
 }
 
+data "aws_ami" "rhel8" {
+  most_recent = true
+  owners      = ["309956199498"]
+
+  filter {
+    name   = "name"
+    values = ["RHEL-8*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+}
+
+
 data "aws_ami" "rhel10" {
   most_recent = true
   owners      = ["309956199498"]
@@ -144,6 +160,22 @@ module "controller" {
   }
 }
 
+module "rhel8" {
+  source          = "./modules/ec2-instance"
+  ami             = data.aws_ami.rhel8.id
+  instance_type   = var.instance_type
+  subnet_id       = aws_subnet.lab.id
+  security_groups = [aws_security_group.ssh.id]
+  cloud_init      = "${path.module}/cloud-init/rhel8.yml"
+  ssh_pubkey_path = var.ansible_ssh_pubkey_path
+
+
+  tags = {
+    Name = "rhel8-managed"
+    Env  = "lab"
+    Role = "managed"
+  }
+}
 
 module "rhel10" {
   source          = "./modules/ec2-instance"
