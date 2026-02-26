@@ -32,11 +32,12 @@
         create: yes
         backup: true
 
-    - name: Apply PASS_MAX_DAYS, PASS_WARN_AGE, and INACTIVE to all system accounts (UID 1–999)
+    - name: Apply PASS_MIN_DAYS, PASS_MAX_DAYS, PASS_WARN_AGE, and INACTIVE to all system accounts (UID 1–999)
       ansible.builtin.shell: |
         awk -F: '($3 < 1000 && $3 >= 1) {print $1}' /etc/shadow | \
         while read u; do
-          chage --maxdays {{ cis_pass_max_days }} \
+          chage --mindays 0 \
+                --maxdays {{ cis_pass_max_days }} \
                 --warndays {{ cis_pass_warn_age }} \
                 --inactive {{ cis_inactive_days }} "$u"
         done
