@@ -6,6 +6,7 @@
 
   vars:
     cis_pass_max_days: 365
+    cis_pass_min_days: 0
     cis_pass_warn_age: 7
     cis_inactive_days: 30
     cis_password_history: 24
@@ -24,95 +25,58 @@
         create: yes
         backup: true
 
-    - name: Ensure PASS_WARN_AGE is set
-      ansible.builtin.lineinfile:
-        path: /etc/login.defs
-        regexp: '^\s*PASS_WARN_AGE'
-        line: "PASS_WARN_AGE {{ cis_pass_warn_age }}"
-        create: yes
-        backup: true
+    ###########################################################################
+    # System accounts (UID 1–999) with real passwords
+    ###########################################################################
 
-    - name: Apply PASS_MIN_DAYS, PASS_MAX_DAYS, PASS_WARN_AGE, and INACTIVE to all system accounts (UID 1–999)
-      ansible.builtin.shell: |
-        awk -F: '($3 < 1000 && $3 >= 1) {print $1}' /etc/shadow | \
-        while read u; do
-          chage --mindays 0 \
-                --maxdays {{ cis_pass_max_days }} \
-                --warndays {{ cis_pass_warn_age }} \
-                --inactive {{ cis_inactive_days }} "$u"
-        done
-      args:
-        executable: /bin/bash
-      register: sys_age
-      changed_when: sys_age.rc == 0
-
-
-
-    - name: Apply password aging to existing human users
-      ansible.builtin.shell: |
-        awk -F: '($2 !~ /^[!*]/) && ($3 >= 1000) && ($1 != "nfsnobody") {print $1}' /etc/shadow | \
-        while read u; do
-          chage --maxdays {{ cis_pass_max_days }} --warndays {{ cis_pass_warn_age }} "$u"
-        done
-      args:
-        executable: /bin/bash
-      register: chage_out
-      changed_when: chage_out.rc == 0
-
-
-
-  ###########################################################################
-  # 4.5.1.4 — INACTIVE password lock
-  ###########################################################################
-
-    - name: Set default INACTIVE to 30 days
-      ansible.builtin.command: useradd -D -f {{ cis_inactive_days }}
-      register: useradd_default
-      changed_when: "'INACTIVE={{ cis_inactive_days }}' not in useradd_default.stdout"
-
-    - name: Apply INACTIVE to existing human users
-      ansible.builtin.shell: |
-        awk -F: '($2 !~ /^[!*]/) && ($3 >= 1000) && ($1 != "nfsnobody") {print $1}' /etc/shadow | \
-        while read u; do
-          chage --inactive {{ cis_inactive_days }} "$u"
-        done
-      args:
-        executable: /bin/bash
-      register: inactive_out
-      changed_when: inactive_out.rc == 0
-
-  ###########################################################################
-  # 4.4.3.3.1 — Password history (pam_pwhistory)
-  ###########################################################################
-
-    - name: Ensure pwhistory.conf contains remember and enforce_for_root
-      ansible.builtin.blockinfile:
-        path: /etc/security/pwhistory.conf
-        create: yes
-        backup: true
-        block: |
-          remember = {{ cis_password_history }}
-          enforce_for_root
-
-    - name: Get authselect profile name
-      ansible.builtin.command: awk 'NR==1 {print $1}' /etc/authselect/authselect.conf
-      register: authselect_profile
+    - name: Get system accounts (UID 0–999)
+      ansible.builtin.command: >
+        awk -F: '($3 <= 999 && $3 >= 0) {print $1}' /etc/passwd
+      register: system_accounts_raw
       changed_when: false
 
-    - name: Set authselect PAM directory
+    - name: Set system accounts fact
       ansible.builtin.set_fact:
-        authselect_pam_dir: "/etc/authselect/{{ authselect_profile.stdout }}"
+        system_accounts: "{{ system_accounts_raw.stdout_lines }}"
 
-    - name: Remove remember= from pam_pwhistory in authselect profile
-      ansible.builtin.replace:
-        path: "{{ authselect_pam_dir }}/{{ item }}"
-        regexp: '(^\s*password\s+(requisite|required|sufficient)\s+pam_pwhistory\.so.*)\s+remember=\S+'
-        replace: '\1'
-        backup: true
-      loop:
-        - system-auth
-        - password-auth
+    - name: Apply CIS password aging to system accounts
+      ansible.builtin.user:
+        name: "{{ item }}"
+        password_expire_max: "{{ cis_pass_max_days }}"
+        password_expire_min: "{{ cis_pass_min_days }}"
+        password_expire_warn: "{{ cis_pass_warn_age }}"
+      loop: "{{ system_accounts }}"
 
-    - name: Apply authselect changes
-      ansible.builtin.command: authselect apply-changes
+    - name: Set INACTIVE days for system accounts
+      ansible.builtin.command: >
+        chage --inactive {{ cis_inactive_days }} {{ item }}
+      loop: "{{ system_accounts }}"
+      changed_when: true
+
+    ###########################################################################
+    # Human accounts (UID >= 1000)
+    ###########################################################################
+
+    - name: Get human users
+      ansible.builtin.command: >
+        awk -F: '($3 >= 1000) && ($1 != "nfsnobody") {print $1}' /etc/passwd
+      register: human_accounts_raw
+      changed_when: false
+
+    - name: Set human accounts fact
+      ansible.builtin.set_fact:
+        human_accounts: "{{ human_accounts_raw.stdout_lines }}"
+
+    - name: Apply CIS password aging to human accounts
+      ansible.builtin.user:
+        name: "{{ item }}"
+        password_expire_max: "{{ cis_pass_max_days }}"
+        password_expire_min: "{{ cis_pass_min_days }}"
+        password_expire_warn: "{{ cis_pass_warn_age }}"
+      loop: "{{ human_accounts }}"
+
+    - name: Set INACTIVE days for human accounts
+      ansible.builtin.command: >
+        chage --inactive {{ cis_inactive_days }} {{ item }}
+      loop: "{{ human_accounts }}"
       changed_when: true
