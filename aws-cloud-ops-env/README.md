@@ -1,28 +1,20 @@
-AWS Cloud Operations ENV – Production‑Style Infrastructure, Monitoring, and Self‑Healing
-A fully automated, production‑grade AWS environment designed to showcase Cloud Systems Engineering skills across infrastructure, automation, monitoring, reliability, and troubleshooting. This lab deploys a multi‑tier architecture using Terraform, supports configuration automation, includes CloudWatch dashboards and alarms, and implements EventBridge‑driven self‑healing. A chaos engineering toolkit is included to simulate real operational failures.  
 
-Architecture overview  
+A full AWS Cloud Operations environment using Terraform, fully automated, with chaos‑tested.
+
+
 This environment provisions:  
 
-*A VPC with publiic and private subnets across two Availability Zones.  
+Multi‑AZ VPC - A VPC with publiic and private subnets across two Availability Zones.   
+ALB + ASG running a Flask app - An Application Load Balancer distributing traffic to a private Auto Scaling Group.  
+Bastion via SSM - A bastion host for secure access using SSM.  
+CloudWatch dashboards + alarms  
+SNS alerts - CloudWatch dashboards, alarms, and SNS notifications.  
+Chaos engineered bash scripts  
+Clean, modular Terraform across all components  
 
-*A bastion host for secure access using SSM.  
 
-*An Application Load Balancer distributing traffic to a private Auto Scaling Group.  
+This project showcases the core of CloudOps/SRE work: automation, monitoring, resilience, and real‑world troubleshooting.
 
-*EC2 instances running a simple web application via cloud‑init.  
-
-*IAM roles and instance profiles for SSM, CloudWatch, and automation.  
-
-*CloudWatch dashboards, alarms, and SNS notifications.  
-
-*EventBridge + Lambda remediation hooks (planned).  
-
-*GitHub Actions CI/CD pipeline for Terraform (planned).  
-
-*Chaos engineering scripts to simulate failures.  
-
-The design mirrors real cloud operations environments used in production.  
 
 
 Repository structure  
