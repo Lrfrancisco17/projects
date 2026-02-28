@@ -4,23 +4,23 @@ A fully automated, production‑grade AWS environment designed to showcase Cloud
 Architecture overview  
 This environment provisions:  
 
-A VPC with public and private subnets across two Availability Zones.  
+*A VPC with publiic and private subnets across two Availability Zones.  
 
-A bastion host for secure access using SSM.  
+*A bastion host for secure access using SSM.  
 
-An Application Load Balancer distributing traffic to a private Auto Scaling Group.  
+*An Application Load Balancer distributing traffic to a private Auto Scaling Group.  
 
-EC2 instances running a simple web application via cloud‑init.  
+*EC2 instances running a simple web application via cloud‑init.  
 
-IAM roles and instance profiles for SSM, CloudWatch, and automation.  
+*IAM roles and instance profiles for SSM, CloudWatch, and automation.  
 
-CloudWatch dashboards, alarms, and SNS notifications.  
+*CloudWatch dashboards, alarms, and SNS notifications.  
 
-EventBridge + Lambda remediation hooks (planned).  
+*EventBridge + Lambda remediation hooks (planned).  
 
-GitHub Actions CI/CD pipeline for Terraform (planned).  
+*GitHub Actions CI/CD pipeline for Terraform (planned).  
 
-Chaos engineering scripts to simulate failures.  
+*Chaos engineering scripts to simulate failures.  
 
 The design mirrors real cloud operations environments used in production.  
 
