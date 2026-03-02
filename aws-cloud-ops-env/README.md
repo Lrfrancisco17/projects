@@ -164,3 +164,4 @@ Example:
   #./kill-nginx.sh  
 This stops the app service, causing ALB health checks to fail and triggering alarms.  
  
+# trigger
