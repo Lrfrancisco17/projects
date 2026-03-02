@@ -3,8 +3,11 @@ name: Terraform CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-
+    paths: 
+      - 'aws-cloud-ops-env/**' 
+    pull_request: 
+      paths: 
+        - 'aws-cloud-ops-env/**'
 jobs:
   terraform:
     name: Terraform Validate & Plan
