@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths: 
       - 'aws-cloud-ops-env/**' 
+
     pull_request: 
       paths: 
         - 'aws-cloud-ops-env/**'
