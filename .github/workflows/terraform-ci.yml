@@ -3,12 +3,13 @@ name: Terraform CI
 on:
   push:
     branches: [ main ]
-    paths: 
-      - 'aws-cloud-ops-env/**' 
+    paths:
+      - 'aws-cloud-ops-env/**'
 
-    pull_request: 
-      paths: 
-        - 'aws-cloud-ops-env/**'
+  pull_request:
+    paths:
+      - 'aws-cloud-ops-env/**'
+
 jobs:
   terraform:
     name: Terraform Validate & Plan
@@ -43,4 +44,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
 
-# reload
