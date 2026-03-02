@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/envs/dev
+        working-directory: aws-cloud-ops-env/terraform/envs/dev
 
     steps:
       - name: Checkout repository
