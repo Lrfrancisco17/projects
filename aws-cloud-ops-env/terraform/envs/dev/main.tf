@@ -74,7 +74,6 @@ module "asg" {
   ami_id           = var.app_ami
   instance_type    = var.app_instance_type
   instance_profile = module.iam.bastion_instance_profile
-  user_data        = file("${path.module}/user_data.sh")
 
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
@@ -88,6 +87,10 @@ module "asg" {
   desired_capacity = 2
 
   tags = local.tags
+  
+  depends_on = [ 
+    module.alb 
+  ]
 }
 
 ############################################

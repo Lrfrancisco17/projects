@@ -2,12 +2,14 @@ resource "aws_launch_template" "this" {
   name_prefix   = "${var.name}-lt"
   image_id      = var.ami_id
   instance_type = var.instance_type
+  
+  user_data = base64encode( 
+    file("${path.module}/user_data.sh")
+  )
 
   iam_instance_profile {
     name = var.instance_profile
   }
-
-  user_data = base64encode(var.user_data)
 
   network_interfaces {
     security_groups = [aws_security_group.app.id]
@@ -55,6 +57,10 @@ resource "aws_autoscaling_group" "this" {
     key                 = "Name"
     value               = "${var.name}-instance"
     propagate_at_launch = true
-  }
+  }  
+  
+  depends_on = [ 
+    aws_launch_template.this, 
+  ]
 }
 
