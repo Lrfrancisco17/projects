@@ -28,11 +28,6 @@ The baseline role gathers only the essential information needed for a quick syst
   * SELinux mode  
 
 
-
-
-
-
-
 Project Structure  
 
 ansible-baseline-report/  
@@ -53,9 +48,8 @@ Install all Python dependencies on the controller:
   #pip3 install -r requirements.txt  
 
 
-What is in requirements.txt:
-  ansible-core==2.16.14  
-  community.general==8.5.0  
+What is in requirements.txt:  
+  ansible-core>=2.16.14  
   jinja2>=3.1.0  
   PyYAML>=6.0  
   cryptography>=41.0.0  
@@ -64,6 +58,9 @@ What is in requirements.txt:
   botocore>=1.34.0  
   passlib>=1.7.4  
 
+Install the Ansible collection separately:
+
+  #ansible-galaxy collection install community.general
 
 How to create SES SMTP username & password  
 1) Go to the AWS Console → SES (Simple Email Service)  
@@ -112,4 +109,24 @@ AUTH LOGIN
 
 If the credentials are correct, SES responds with:  
 235 Authentication successful
+
+Verify send and recive email on SES:  
+You must verify Sender identity and Recipient identity:  
+
+example email   
+ansible-report@example.com  
+
+
+Steps:  
+
+Go to AWS SES Console → Verified Identities  
+Click Verify New Email Address    
+
+Enter:  
+ansible-report@example.com  
+
+recipent_email@doamin.com  
+
+Click the verification links sent to each inbox  
+After both are verified, your playbook will work immediately.  
 
