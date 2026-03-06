@@ -13,25 +13,29 @@
     <h2>Baseline Report - {{ inventory_hostname }}</h2>
 
     <h3>System Info</h3>
-    <pre>
-OS: {{ os_release.stdout }}
-Kernel: {{ kernel_version.stdout }}
-Uptime: {{ uptime.stdout }}
-Last Reboot: {{ last_reboot.stdout }}
-SELinux: {{ selinux.stdout }}
-    </pre>
+<pre>
+OS: {{ os_release.stdout | default('N/A') }}
+Kernel: {{ kernel_version.stdout | default('N/A') }}
+Uptime: {{ uptime.stdout | default('N/A') }}
+Last Reboot: {{ last_reboot.stdout | default('N/A') }}
+SELinux: {{ selinux.stdout | default('N/A') }}
+</pre>
 
-    <h3>Disk Usage</h3>
-    <pre>{{ disk_usage.stdout }}</pre>
+<h3>Disk Usage</h3>
+<pre>{{ disk_usage.stdout | default('N/A') }}</pre>
 
-    <h3>Memory & CPU</h3>
-    <pre>{{ mem_cpu.stdout }}</pre>
+<h3>Memory Info</h3>
+<pre>{{ meminfo.stdout | default('N/A') }}</pre>
 
-    <h3>Running Services</h3>
-    <pre>{{ running_services.stdout }}</pre>
+<h3>CPU Load</h3>
+<pre>{{ loadavg.stdout | default('N/A') }}</pre>
 
-    <h3>EC2 Metadata</h3>
-    <pre>Instance ID: {{ instance_id.stdout }}</pre>
+<h3>Running Services</h3>
+<pre>{{ running_services.stdout | default('N/A') }}</pre>
+
+<h3>EC2 Metadata</h3>
+<pre>Instance ID: {{ instance_id.stdout | default('N/A') }}</pre>
+
   </div>
 </body>
 </html>

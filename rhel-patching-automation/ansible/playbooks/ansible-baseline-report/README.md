@@ -28,6 +28,11 @@ The baseline role gathers only the essential information needed for a quick syst
   * SELinux mode  
 
 
+
+
+
+
+
 Project Structure  
 
 ansible-baseline-report/  
@@ -44,15 +49,67 @@ ansible-baseline-report/
 └── playbook.yml
 
   
-Requirements  
-Ansible 2.15+  
+Install all Python dependencies on the controller:  
+  #pip3 install -r requirements.txt  
 
-Python boto3 (for AWS inventory)  
 
-AWS credentials configured locally  
+What is in requirements.txt:
+  ansible-core==2.16.14  
+  community.general==8.5.0  
+  jinja2>=3.1.0  
+  PyYAML>=6.0  
+  cryptography>=41.0.0  
+  requests>=2.31.0  
+  boto3>=1.34.0  
+  botocore>=1.34.0  
+  passlib>=1.7.4  
 
-SMTP credentials for sending email  
 
-Install dependencies:  
+How to create SES SMTP username & password  
+1) Go to the AWS Console → SES (Simple Email Service)  
+Make sure you are in the correct region (your SMTP endpoint is email-smtp.us-east-1.amazonaws.com, so use us‑east‑1).  
 
-pip install boto3 botocore  
+2) In the left menu, open:  
+SMTP Settings → Create SMTP Credentials  
+
+This opens an IAM wizard that creates a special IAM user with the correct SES permissions.  
+
+3) Click Create SMTP credentials  
+AWS will generate:  
+
+SMTP Username (looks like a long string, not your IAM username)  
+
+SMTP Password (also a long generated string)  
+
+4) Download the credentials  
+AWS gives you a .csv file containing:  
+SMTP Username  
+SMTP Password  
+
+How to use them on your controller  
+Export them before running your playbook:
+
+  #export SMTP_USER="YOUR_SES_SMTP_USERNAME"  
+  #export SMTP_PASS="YOUR_SES_SMTP_PASSWORD"  
+
+Or store them in Ansible Vault:  
+  
+  smtp_user: "YOUR_SES_SMTP_USERNAME"
+  smtp_pass: "YOUR_SES_SMTP_PASSWORD"
+
+
+verify the mail module is available:  
+
+  #ansible localhost -m community.general.mail -a "subject='test' to='you@example.com'"  
+
+Then type:  
+
+EHLO test
+AUTH LOGIN
+<base64 of SMTP_USER>
+<base64 of SMTP_PASS>
+
+
+If the credentials are correct, SES responds with:  
+235 Authentication successful
+

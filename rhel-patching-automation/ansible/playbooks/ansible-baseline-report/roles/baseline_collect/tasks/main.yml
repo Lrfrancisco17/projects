@@ -1,47 +1,128 @@
 ---
-- name: OS release
-  command: cat /etc/redhat-release
+# -----------------------------
+# OS Release
+# -----------------------------
+- name: Collect OS release
+  command: cat /etc/os-release
   register: os_release
-  changed: false
+  changed_when: false
 
-- name: Kernel version
+- name: Debug OS release
+  debug:
+    var: os_release.stdout
+
+
+# -----------------------------
+# Kernel Version
+# -----------------------------
+- name: Collect kernel version
   command: uname -r
   register: kernel_version
-  changed: false
+  changed_when: false
 
-- name: Uptime
+- name: Debug kernel version
+  debug:
+    var: kernel_version.stdout
+
+
+# -----------------------------
+# Uptime
+# -----------------------------
+- name: Collect uptime
   command: uptime -p
   register: uptime
-  changed: false
+  changed_when: false
 
-- name: Last reboot
+- name: Debug uptime
+  debug:
+    var: uptime.stdout
+
+
+# -----------------------------
+# Last Reboot
+# -----------------------------
+- name: Collect last reboot time
   command: who -b
   register: last_reboot
-  changed: false
+  changed_when: false
 
-- name: Disk usage
+- name: Debug last reboot
+  debug:
+    var: last_reboot.stdout
+
+
+# -----------------------------
+# Disk Usage
+# -----------------------------
+- name: Collect disk usage
   command: df -h / /var /boot
   register: disk_usage
-  changed: false
+  changed_when: false
 
-- name: Memory and CPU load
-  command: top -b -n1 | head -n 5
-  register: mem_cpu
-  changed: false
+- name: Debug disk usage
+  debug:
+    var: disk_usage.stdout
 
-- name: Running services
+
+# -----------------------------
+# Memory and CPU Load (portable)
+# -----------------------------
+- name: Collect memory info
+  command: cat /proc/meminfo
+  register: meminfo
+  changed_when: false
+
+- name: Debug memory info
+  debug:
+    var: meminfo.stdout
+
+- name: Collect CPU load
+  command: cat /proc/loadavg
+  register: loadavg
+  changed_when: false
+
+- name: Debug CPU load
+  debug:
+    var: loadavg.stdout
+
+
+# -----------------------------
+# Running Services (systemd)
+# -----------------------------
+- name: Collect running services
   command: systemctl list-units --type=service --state=running
   register: running_services
-  changed: false
+  changed_when: false
 
-- name: EC2 instance metadata
+- name: Debug running services
+  debug:
+    var: running_services.stdout
+
+
+# -----------------------------
+# EC2 Instance Metadata
+# -----------------------------
+- name: Collect EC2 instance ID
   uri:
     url: http://169.254.169.254/latest/meta-data/instance-id
   register: instance_id
-  changed: false
+  changed_when: false
 
-- name: SELinux mode
-  command: getenforce
+- name: Debug EC2 instance ID
+  debug:
+    var: instance_id.stdout
+
+
+# -----------------------------
+# SELinux Mode (RHEL only)
+# Ubuntu will output "not installed"
+# -----------------------------
+- name: Collect SELinux mode
+  shell: getenforce || echo "SELinux not installed"
   register: selinux
-  changed: false
+  changed_when: false
+
+- name: Debug SELinux mode
+  debug:
+    var: selinux.stdout
 
