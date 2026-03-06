@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f7f7f7;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.host-card {
+  background: #ffffff;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.host-card h2 {
+  margin-top: 0;
+  color: #444;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th, table td {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+table th {
+  background: #efefef;
+  font-weight: bold;
+}
+
+pre {
+  margin: 0;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Combined Baseline Report</h1>
+
+{% for host, vars in all_results.items() %}
+  {% if vars.baseline_results_all is defined %}
+    {% set data = vars.baseline_results_all[host] %}
+
+    <div class="host-card">
+      <h2>{{ data.hostname }} ({{ data.ip }})</h2>
+
+      <table>
+        <tr><th>Hostname</th><td>{{ data.hostname }}</td></tr>
+        <tr><th>IP Address</th><td>{{ data.ip }}</td></tr>
+        <tr><th>OS Release</th><td>{{ data.os }}</td></tr>
+        <tr><th>Uptime</th><td>{{ data.uptime }}</td></tr>
+        <tr><th>SELinux Mode</th><td>{{ data.selinux }}</td></tr>
+        <tr><th>Disk /</th><td><pre>{{ data.disk_root }}</pre></td></tr>
+        <tr><th>Disk /var</th><td><pre>{{ data.disk_var }}</pre></td></tr>
+        <tr><th>Disk /boot</th><td><pre>{{ data.disk_boot }}</pre></td></tr>
+      </table>
+    </div>
+
+  {% endif %}
+{% endfor %}
+
+</body>
+</html>
+

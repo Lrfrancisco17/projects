@@ -1,128 +1,52 @@
----
-# -----------------------------
-# OS Release
-# -----------------------------
-- name: Collect OS release
-  command: cat /etc/os-release
+- name: Get OS release
+  command: cat /etc/redhat-release
   register: os_release
-  changed_when: false
+  changed: false
 
-- name: Debug OS release
-  debug:
-    var: os_release.stdout
+- name: Get IP address
+  command: hostname -I
+  register: ip_address
+  changed: false
 
-
-# -----------------------------
-# Kernel Version
-# -----------------------------
-- name: Collect kernel version
-  command: uname -r
-  register: kernel_version
-  changed_when: false
-
-- name: Debug kernel version
-  debug:
-    var: kernel_version.stdout
-
-
-# -----------------------------
-# Uptime
-# -----------------------------
-- name: Collect uptime
+- name: Get uptime
   command: uptime -p
   register: uptime
-  changed_when: false
+  changed: false
 
-- name: Debug uptime
-  debug:
-    var: uptime.stdout
+- name: Get disk usage for /
+  command: df -h /
+  register: disk_root
+  changed: false
 
+- name: Get disk usage for /var
+  command: df -h /var
+  register: disk_var
+  changed: false
 
-# -----------------------------
-# Last Reboot
-# -----------------------------
-- name: Collect last reboot time
-  command: who -b
-  register: last_reboot
-  changed_when: false
+- name: Get disk usage for /boot
+  command: df -h /boot
+  register: disk_boot
+  changed: false
 
-- name: Debug last reboot
-  debug:
-    var: last_reboot.stdout
-
-
-# -----------------------------
-# Disk Usage
-# -----------------------------
-- name: Collect disk usage
-  command: df -h / /var /boot
-  register: disk_usage
-  changed_when: false
-
-- name: Debug disk usage
-  debug:
-    var: disk_usage.stdout
-
-
-# -----------------------------
-# Memory and CPU Load (portable)
-# -----------------------------
-- name: Collect memory info
-  command: cat /proc/meminfo
-  register: meminfo
-  changed_when: false
-
-- name: Debug memory info
-  debug:
-    var: meminfo.stdout
-
-- name: Collect CPU load
-  command: cat /proc/loadavg
-  register: loadavg
-  changed_when: false
-
-- name: Debug CPU load
-  debug:
-    var: loadavg.stdout
-
-
-# -----------------------------
-# Running Services (systemd)
-# -----------------------------
-- name: Collect running services
-  command: systemctl list-units --type=service --state=running
-  register: running_services
-  changed_when: false
-
-- name: Debug running services
-  debug:
-    var: running_services.stdout
-
-
-# -----------------------------
-# EC2 Instance Metadata
-# -----------------------------
-- name: Collect EC2 instance ID
-  uri:
-    url: http://169.254.169.254/latest/meta-data/instance-id
-  register: instance_id
-  changed_when: false
-
-- name: Debug EC2 instance ID
-  debug:
-    var: instance_id.stdout
-
-
-# -----------------------------
-# SELinux Mode (RHEL only)
-# Ubuntu will output "not installed"
-# -----------------------------
-- name: Collect SELinux mode
-  shell: getenforce || echo "SELinux not installed"
+- name: Get SELinux mode
+  command: getenforce
   register: selinux
-  changed_when: false
+  changed: false
 
-- name: Debug SELinux mode
-  debug:
-    var: selinux.stdout
+- name: Store structured results for aggregation
+  set_fact:
+    baseline_results_all: >-
+      {{ baseline_results_all | default({}) |
+         combine({
+           inventory_hostname: {
+             'hostname': inventory_hostname,
+             'ip': ip_address.stdout,
+             'os': os_release.stdout,
+             'uptime': uptime.stdout,
+             'disk_root': disk_root.stdout,
+             'disk_var': disk_var.stdout,
+             'disk_boot': disk_boot.stdout,
+             'selinux': selinux.stdout
+           }
+         }) }}
 
