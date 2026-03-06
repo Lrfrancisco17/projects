@@ -1,0 +1,9 @@
+---
+- name: Baseline report
+  hosts: all
+  gather_facts: false
+
+  roles:
+    - baseline_collect
+    - email_report
+

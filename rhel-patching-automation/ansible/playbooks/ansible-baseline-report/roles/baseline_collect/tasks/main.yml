@@ -1,0 +1,47 @@
+---
+- name: OS release
+  command: cat /etc/redhat-release
+  register: os_release
+  changed: false
+
+- name: Kernel version
+  command: uname -r
+  register: kernel_version
+  changed: false
+
+- name: Uptime
+  command: uptime -p
+  register: uptime
+  changed: false
+
+- name: Last reboot
+  command: who -b
+  register: last_reboot
+  changed: false
+
+- name: Disk usage
+  command: df -h / /var /boot
+  register: disk_usage
+  changed: false
+
+- name: Memory and CPU load
+  command: top -b -n1 | head -n 5
+  register: mem_cpu
+  changed: false
+
+- name: Running services
+  command: systemctl list-units --type=service --state=running
+  register: running_services
+  changed: false
+
+- name: EC2 instance metadata
+  uri:
+    url: http://169.254.169.254/latest/meta-data/instance-id
+  register: instance_id
+  changed: false
+
+- name: SELinux mode
+  command: getenforce
+  register: selinux
+  changed: false
+

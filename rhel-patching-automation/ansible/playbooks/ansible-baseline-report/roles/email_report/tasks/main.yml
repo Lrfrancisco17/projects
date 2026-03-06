@@ -1,0 +1,18 @@
+---
+- name: Render HTML report
+  template:
+    src: report.html.j2
+    dest: /tmp/baseline_{{ inventory_hostname }}.html
+
+- name: Send email
+  mail:
+    host: "{{ smtp_host }}"
+    port: "{{ smtp_port }}"
+    username: "{{ smtp_user }}"
+    password: "{{ smtp_pass }}"
+    to: "{{ email_to }}"
+    from: "{{ email_from }}"
+    subject: "Baseline Report - {{ inventory_hostname }}"
+    subtype: html
+    body: "{{ lookup('file', '/tmp/baseline_' + inventory_hostname + '.html') }}"
+

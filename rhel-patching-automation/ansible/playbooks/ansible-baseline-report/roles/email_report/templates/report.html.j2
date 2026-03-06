@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    .card { background: white; padding: 20px; border-radius: 8px; }
+    h2 { color: #333; }
+    pre { background: #eee; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Baseline Report - {{ inventory_hostname }}</h2>
+
+    <h3>System Info</h3>
+    <pre>
+OS: {{ os_release.stdout }}
+Kernel: {{ kernel_version.stdout }}
+Uptime: {{ uptime.stdout }}
+Last Reboot: {{ last_reboot.stdout }}
+SELinux: {{ selinux.stdout }}
+    </pre>
+
+    <h3>Disk Usage</h3>
+    <pre>{{ disk_usage.stdout }}</pre>
+
+    <h3>Memory & CPU</h3>
+    <pre>{{ mem_cpu.stdout }}</pre>
+
+    <h3>Running Services</h3>
+    <pre>{{ running_services.stdout }}</pre>
+
+    <h3>EC2 Metadata</h3>
+    <pre>Instance ID: {{ instance_id.stdout }}</pre>
+  </div>
+</body>
+</html>
+
