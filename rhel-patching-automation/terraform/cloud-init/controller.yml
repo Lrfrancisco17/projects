@@ -3,6 +3,9 @@ packages:
   - python3
   - git
   - ansible-core
+  - tree
+  - vim
+  - pip
 
 users:
   - name: ansible

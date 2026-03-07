@@ -7,8 +7,10 @@ output "inventory" {
 [controller]
 ${module.controller.private_ip}
 
-[rhel]
+[rhel10]
 ${module.rhel10.private_ip}
+
+[rhel9]
 ${module.rhel8.private_ip}
 
 [ubuntu]
