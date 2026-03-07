@@ -1,37 +1,49 @@
+---
 - name: Get OS release
-  command: cat /etc/redhat-release
+  shell: "{{ os_release_cmd[ansible_facts['os_family']] }}"
   register: os_release
-  changed: false
+  changed_when: false
+
+- name: Get hostname
+  command: "{{ hostname_cmd }}"
+  register: host_name
+  changed_when: false
+
+- name: Get kernel version
+  command: "{{ kernel_cmd }}"
+  register: kernel_version
+  changed_when: false
 
 - name: Get IP address
   command: hostname -I
   register: ip_address
-  changed: false
+  changed_when: false
 
 - name: Get uptime
   command: uptime -p
   register: uptime
-  changed: false
+  changed_when: false
 
 - name: Get disk usage for /
-  command: df -h /
+  command: "df -h {{ disk_paths.root }}"
   register: disk_root
-  changed: false
+  changed_when: false
 
 - name: Get disk usage for /var
-  command: df -h /var
+  command: "df -h {{ disk_paths.var }}"
   register: disk_var
-  changed: false
+  changed_when: false
 
 - name: Get disk usage for /boot
-  command: df -h /boot
+  command: "df -h {{ disk_paths.boot }}"
   register: disk_boot
-  changed: false
+  changed_when: false
+  ignore_errors: true
 
 - name: Get SELinux mode
-  command: getenforce
+  command: "{{ selinux_cmd[ansible_facts['os_family']] }}"
   register: selinux
-  changed: false
+  changed_when: false
 
 - name: Store structured results for aggregation
   set_fact:
@@ -39,9 +51,10 @@
       {{ baseline_results_all | default({}) |
          combine({
            inventory_hostname: {
-             'hostname': inventory_hostname,
+             'hostname': host_name.stdout,
              'ip': ip_address.stdout,
              'os': os_release.stdout,
+             'kernel': kernel_version.stdout,
              'uptime': uptime.stdout,
              'disk_root': disk_root.stdout,
              'disk_var': disk_var.stdout,
@@ -49,4 +62,3 @@
              'selinux': selinux.stdout
            }
          }) }}
-

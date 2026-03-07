@@ -1,0 +1,19 @@
+---
+os_release_cmd:
+  RedHat: "cat /etc/redhat-release"
+  Debian: "grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"'"
+  Amazon: "grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"'"
+
+selinux_cmd:
+  RedHat: "getenforce"
+  Debian: "echo 'Not Applicable'"
+  Amazon: "getenforce"
+
+disk_paths:
+  root: "/"
+  var: "/var"
+  boot: "/boot"
+
+kernel_cmd: "uname -r"
+hostname_cmd: "hostname"
+

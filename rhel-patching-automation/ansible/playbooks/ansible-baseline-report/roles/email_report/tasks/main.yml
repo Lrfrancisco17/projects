@@ -1,23 +1,17 @@
 ---
-- name: Render HTML report
+- name: Render combined HTML report
   template:
-    src: report.html.j2
-    dest: /tmp/baseline_{{ inventory_hostname }}.html
+    src: combined_report.j2
+    dest: /tmp/combined_report.html
 
-- name: Read rendered HTML from remote host
-  slurp:
-    src: /tmp/baseline_{{ inventory_hostname }}.html
-  register: html_content
-
-- name: Send email from controller
-  delegate_to: localhost
-  community.general.mail:
-    host: "{{ smtp_host }}"
-    port: "{{ smtp_port }}"
-    username: "{{ smtp_user }}"
-    password: "{{ smtp_pass }}"
+- name: Send combined email
+  mail:
+    host: email-smtp.us-east-1.amazonaws.com
+    port: 587
+    username: "{{ smtp_username }}"
+    password: "{{ smtp_password }}"
     to: "{{ email_to }}"
     from: "{{ email_from }}"
-    subject: "Baseline Report - {{ inventory_hostname }}"
+    subject: "Combined Baseline Report"
     subtype: html
-    body: "{{ html_content.content | b64decode }}"
+    body: "{{ lookup('file', '/tmp/combined_report.html') }}"

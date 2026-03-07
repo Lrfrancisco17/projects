@@ -1,37 +1,16 @@
+---
 - name: Collect baseline data from all servers
   hosts: all
   gather_facts: yes
-  tasks:
-    - name: Run baseline script
-      command: /usr/local/bin/baseline_collect.sh
-      register: baseline_output
+  roles:
+    - baseline_collect
 
-    - name: Store results for aggregation
-      set_fact:
-        baseline_results_all: >-
-          {{ baseline_results_all | default({}) |
-             combine({ inventory_hostname: baseline_output.stdout }) }}
+# ------------------------------------------------------------------------------
 
 - name: Build and send combined report
   hosts: localhost
   run_once: true
-  tasks:
-    - name: Render combined HTML report
-      template:
-        src: combined_report.j2
-        dest: /tmp/combined_report.html
-      vars:
-        all_results: "{{ hostvars }}"
-
-    - name: Send combined email
-      mail:
-        host: email-smtp.us-east-1.amazonaws.com
-        port: 587
-        username: "{{ ses_username }}"
-        password: "{{ ses_password }}"
-        to: "ops-team@example.com"
-        subject: "Combined Baseline Report"
-        subtype: html
-        body: "{{ lookup('file', '/tmp/combined_report.html') }}"
-
-        
+  roles:
+    - email_report
+  vars:
+    all_results: "{{ hostvars }}"
