@@ -1,8 +1,0 @@
-smtp_host: email-smtp.us-east-1.amazonaws.com
-smtp_port: 587
-smtp_user: "{{ lookup('env', 'SMTP_USER') }}"
-smtp_pass: "{{ lookup('env', 'SMTP_PASS') }}"
-
-email_to: "you@example.com"
-email_from: "ansible-report@example.com"
-
