@@ -1,7 +1,7 @@
 package_state: latest
 
-email_to: "lrfrancisco17@gmail.com"
-email_from: "lrfranciscol17labs@gmail.com"
+email_to: "receiver_email@example.com"
+email_from: "sender-email@example.com"
 
 smtp_username: "{{ lookup('env', 'SMTP_USER') }}"
 smtp_password: "{{ lookup('env', 'SMTP_PASS') }}"
