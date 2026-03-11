@@ -1,6 +1,6 @@
 # Baseline Report Project (Ansible)
 
-[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/ans_runbook_prj.png)](hhttps://www.youtube.com/watch?v=d6E4WPumSKE&t=3s)
+[![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/ans_runbook_prj.jpg)](hhttps://www.youtube.com/watch?v=d6E4WPumSKE&t=3s)
 This project collects a small set of baseline system information from Linux servers running on AWS EC2 and sends the results as a styled HTML email. It is designed to be simple, readable, and easy to extend.  
 
 Overview  
