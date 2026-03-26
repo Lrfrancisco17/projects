@@ -71,7 +71,7 @@ module "asg" {
   source = "../../modules/asg"
 
   name             = "dev"
-  ami_id           = var.app_ami
+  ami_id           = data.aws_ami.al2023.id
   instance_type    = var.app_instance_type
   instance_profile = module.iam.bastion_instance_profile
 
@@ -87,10 +87,6 @@ module "asg" {
   desired_capacity = 2
 
   tags = local.tags
-  
-  depends_on = [ 
-    module.alb 
-  ]
 }
 
 ############################################
