@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "0.3",
+  "description": "Chaos experiment: kill Flask app on target instances",
+  "assumeRole": "{{ AutomationAssumeRole }}",
+  "parameters": {
+    "InstanceIds": {
+      "type": "StringList",
+      "description": "EC2 instances to target"
+    },
+    "AutomationAssumeRole": {
+      "type": "String",
+      "description": "IAM role for Automation",
+      "default": ""
+    }
+  },
+  "mainSteps": [
+    {
+      "name": "KillFlask",
+      "action": "aws:runCommand",
+      "inputs": {
+        "DocumentName": "AWS-RunShellScript",
+        "InstanceIds": "{{ InstanceIds }}",
+        "Parameters": {
+          "commands": [
+            "sudo /opt/chaos/kill_flask.sh"
+          ]
+        }
+      }
+    }
+  ]
+}
+

@@ -58,3 +58,26 @@ systemctl daemon-reload
 systemctl enable webapp
 systemctl start webapp
 
+############################################
+# CHAOS SCRIPT (for SSM Automation)
+############################################
+
+mkdir -p /opt/chaos
+
+cat <<'EOF' >/opt/chaos/kill_flask.sh
+#!/bin/bash
+set -xe
+
+echo "$(date) - Chaos: killing Flask app" >> /var/log/chaos.log
+
+# Kill Flask process
+pkill -f "app.py" || true
+
+sleep 5
+
+# Show service status
+systemctl status webapp || true
+EOF
+
+chmod +x /opt/chaos/kill_flask.sh
+
