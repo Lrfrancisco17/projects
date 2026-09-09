@@ -3,6 +3,7 @@
 [![Watch the video](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/tf_ansible_prj.jpg)](https://www.youtube.com/watch?v=VoFaZ2rkyGw)
 
 
+
 Infrastructure Automation Project: 
 
 Terraform + AWS + Ansible (RHEL & Ubuntu)
@@ -13,7 +14,7 @@ This repository provides a complete, end‑to‑end automation stack that deploy
 *	1 RHEL 10 Managed Node  
 *	1 Ubuntu Managed Node  
 
-
+https://github.com/Lrfrancisco17/projects/blob/main/thumnails/Rhel_Patching_Miro_Board.png
 
 All infrastructure is created using Terraform, and all configuration, patching, and rollback operations are handled by Ansible. Each server is bootstrapped with a default Ansible user, SSH keys, and passwordless sudo via cloud-init, enabling immediate automation with no manual steps.
 
