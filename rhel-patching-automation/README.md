@@ -11,8 +11,9 @@ This repository provides a complete, end‑to‑end automation stack that deploy
 
 
 *	1 RHEL 10 Ansible Controller Node  
-*	1 RHEL 10 Managed Node  
-*	1 Ubuntu Managed Node  
+*	1 RHEL 10 Managed Node
+*	1 Rhel 8 Managed Node  
+*	1 Ubuntu 22.04 Managed Node  
 
 ![image description](https://github.com/Lrfrancisco17/projects/blob/main/thumnails/Rhel_Patching_Miro_Board.png) 
 
